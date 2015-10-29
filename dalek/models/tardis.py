@@ -55,8 +55,7 @@ class TARDISModelMixin(Model):
 
 class TARDISTinnerModelMixin(TARDISModelMixin):
     inputs = tuple()
-    outputs = ('packet_nu', 'packet_energy', 'virtual_nu', 'virtual_energy',
-               'param_name', 'param_value')
+    outputs = ('packet_nu', 'packet_energy', 'virtual_nu', 'virtual_energy')
 
     def evaluate(self, *args, **kwargs):
         config_name_space = copy.deepcopy(self.config_name_space)
@@ -67,11 +66,14 @@ class TARDISTinnerModelMixin(TARDISModelMixin):
                                                 validate=False,
                                                 atom_data=self.atom_data)
 
+
+        t_inner = u.Quantity(args[-1], u.K)
+
         radial1d_mdl = model.Radial1DModel(config)
 
         simulation = TinnerSimulation(config)
 
-        simulation.run_simulation(radial1d_mdl, self.t_inner * u.K)
+        simulation.run_simulation(radial1d_mdl, t_inner)
 
         runner = radial1d_mdl.runner
 
