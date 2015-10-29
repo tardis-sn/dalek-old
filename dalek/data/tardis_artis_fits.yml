@@ -1,0 +1,92 @@
+#New configuration for TARDIS based on YAML
+#IMPORTANT any pure floats need to have a +/- after the e e.g. 2e+5
+#Hopefully pyyaml will fix this soon.
+---
+#Currently only simple1d is allowed
+tardis_config_version: v1.0
+
+supernova:
+    luminosity_requested: 1.2659155172762502e+43 erg/s
+#    luminosity_requested: 1.3265352399286673e+42 erg/s
+    luminosity_wavelength_start: 1300. angstrom
+    luminosity_wavelength_end: 10000. angstrom
+    time_explosion: 16.7 day
+    distance : 1.0 Mpc
+
+
+atom_data: kurucz_cd23_chianti_H_He.h5
+
+
+model:
+
+    structure:
+        type: specific
+        velocity:
+
+            start : 9000 km/s
+            stop : 3e4 km/s
+            num: 20
+
+
+        density:
+            type : branch85_w7
+
+
+    abundances:
+        type: uniform
+        O: 0.021574
+        Si: 0.54
+        S: 0.2
+        Ca: 0.05
+        Ti: 0.00016
+        Fe: 0.02
+        Co: 0.023609
+        Ni: 0.003208
+        Mg: 0.08
+        Ti: 0.000160
+        Cr: 0.000800
+        C: 0.000500
+
+plasma:
+#    initial_t_inner: 10000 K
+#    initial_t_rads: 10000 K
+    disable_electron_scattering: no
+    ionization: nebular
+    excitation: dilute-lte
+    #radiative_rates_type - currently supported are lte, nebular and detailed
+    radiative_rates_type: dilute-blackbody
+    #line interaction type - currently supported are scatter, downbranch and macroatom
+    line_interaction_type: macroatom
+#    nlte:
+#        species : [Si 2]
+
+
+montecarlo:
+    seed: 23111963
+    no_of_packets : 4.0e+4
+    nthreads: 8
+    last_no_of_packets : 4.0e+4
+    iterations: 20
+    lock_t_inner_cycle: 3
+    black_body_sampling:
+        start: 1 angstrom
+        stop: 1000000 angstrom
+        num: 1.e+6
+
+    no_of_virtual_packets: 3
+
+    convergence_criteria:
+        type: specific
+        damping_constant: 1.0
+        threshold: 0.05
+        fraction: 0.8
+        hold: 3
+        t_inner:
+            damping_constant: 1.0
+
+
+
+spectrum:
+    start : 500 angstrom
+    stop : 20000 angstrom
+    num: 10000
