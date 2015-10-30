@@ -73,6 +73,19 @@ class TinnerSimulation(Simulation):
         return t_rad_converged and w_converged
 
     def run_simulation(self, model, t_inner):
+        """
+        Run the model with a given temperature of the inner boundary
+        Parameters
+        ----------
+        model
+        t_inner
+
+        Returns
+        -------
+            : None
+            will change the model and the simulation parameters
+
+        """
         start_time = time.time()
 
         iterations_remaining = self.tardis_config.montecarlo.iterations
@@ -97,7 +110,6 @@ class TinnerSimulation(Simulation):
             converged = self.get_convergence_status(
                 model.t_rads, model.ws, estimated_t_rad,
                 estimated_w)
-
 
             if converged:
                 break

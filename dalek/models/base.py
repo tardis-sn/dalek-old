@@ -12,13 +12,6 @@ from astropy.modeling import Model, Parameter
 import numpy as np
 from collections import OrderedDict
 
-def intensity_black_body_wavelength(wavelength, T):
-    wavelength = u.Quantity(wavelength, u.angstrom)
-    T = u.Quantity(T, u.K)
-    pref = ((8 * np.pi * const.h * const.c) / wavelength**5)
-    return pref / (np.exp((const.h * const.c)/(wavelength * const.k_B * T)) - 1)
-
-
 class TARDISModelMixin(Model):
     inputs = tuple()
     outputs = ('packet_nu', 'packet_energy', 'virtual_nu', 'virtual_energy',
@@ -58,10 +51,6 @@ class TARDISModelMixin(Model):
 
 
 class TARDISTinnerModelMixin(TARDISModelMixin):
-    inputs = tuple()
-    outputs = ('packet_nu', 'packet_energy', 'virtual_nu', 'virtual_energy')
-
-
 
     def evaluate(self, *args, **kwargs):
         config = self._get_config_from_args(args[:-1])

@@ -1,5 +1,17 @@
+from collections import OrderedDict
+
 import numpy as np
 from astropy.modeling import Model
+
+from astropy import units as u, constants as const
+
+def intensity_black_body_wavelength(wavelength, T):
+    wavelength = u.Quantity(wavelength, u.angstrom)
+    T = u.Quantity(T, u.K)
+    pref = ((8 * np.pi * const.h * const.c) / wavelength**5)
+    return pref / (np.exp((const.h * const.c)/(wavelength * const.k_B * T)) - 1)
+
+
 
 class SimpleTARDISUncertaintyModel(Model):
     inputs = ('packet_nu', 'packet_energy', 'virtual_nu', 'virtual_energy',
