@@ -4,6 +4,10 @@
 
 from astropy.tests.pytest_plugins import *
 
+from astropy.utils.argparse import writeable_directory
+
+#from astropy.tests.pytest_plugins import pytest_addoption as addoption_ap
+
 ## Uncomment the following line to treat all DeprecationWarnings as
 ## exceptions
 # enable_deprecations_as_exceptions()
@@ -32,3 +36,75 @@ from astropy.tests.pytest_plugins import *
 #     TESTED_VERSIONS[packagename] = version.version
 # except NameError:   # Needed to support Astropy <= 1.0.0
 #     pass
+
+def pytest_addoption(parser):
+    parser.addoption("--remote-data", action="store_true",
+                     help="run tests with online data")
+    parser.addoption("--open-files", action="store_true",
+                     help="fail if any test leaves files open")
+
+    parser.addoption("--doctest-plus", action="store_true",
+                     help="enable running doctests with additional "
+                     "features not found in the normal doctest "
+                     "plugin")
+
+    parser.addoption("--doctest-rst", action="store_true",
+                     help="enable running doctests in .rst documentation")
+
+    parser.addoption("--config-dir", nargs='?', type=writeable_directory,
+                     help="specify directory for storing and retrieving the "
+                          "Astropy configuration during tests (default is "
+                          "to use a temporary directory created by the test "
+                          "runner); be aware that using an Astropy config "
+                          "file other than the default can cause some tests "
+                          "to fail unexpectedly")
+
+    parser.addoption("--cache-dir", nargs='?', type=writeable_directory,
+                     help="specify directory for storing and retrieving the "
+                          "Astropy cache during tests (default is "
+                          "to use a temporary directory created by the test "
+                          "runner)")
+
+    parser.addini("doctest_plus", "enable running doctests with additional "
+                  "features not found in the normal doctest plugin")
+
+    parser.addini("doctest_norecursedirs",
+                  "like the norecursedirs option but applies only to doctest "
+                  "collection", type="args", default=())
+
+    parser.addini("doctest_rst",
+                  "Run the doctests in the rst documentation",
+                  default=False)
+
+    parser.addini("config_dir",
+                  "specify directory for storing and retrieving the "
+                  "Astropy configuration during tests (default is "
+                  "to use a temporary directory created by the test "
+                  "runner); be aware that using an Astropy config "
+                  "file other than the default can cause some tests "
+                  "to fail unexpectedly", default=None)
+
+    parser.addini("cache_dir",
+                  "specify directory for storing and retrieving the "
+                  "Astropy cache during tests (default is "
+                  "to use a temporary directory created by the test "
+                  "runner)", default=None)
+
+    parser.addini("open_files_ignore",
+                  "when used with the --open-files option, allows "
+                  "specifying names of files that may be ignored when "
+                  "left open between tests--files in this list are matched "
+                  "may be specified by their base name (ignoring their full "
+                  "path) or by absolute path", type="args", default=())
+
+    parser.addoption('--repeat', action='store',
+                     help='Number of times to repeat each test')
+
+
+
+import dalek
+import os
+
+@pytest.fixture
+def data_path():
+    return os.path.join(dalek.__path__[0], 'data')

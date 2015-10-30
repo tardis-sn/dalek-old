@@ -1,5 +1,7 @@
+import os
+
 import pytest
-from dalek.models.tardis import assemble_tardis_model, assemble_tardis_model_tinner
+from dalek.models import assemble_tardis_model, assemble_tardis_model_tinner
 
 @pytest.fixture()
 def parameter_names():
@@ -17,5 +19,13 @@ def parameter_names():
     'supernova.luminosity_requested',
     'model.structure.velocity.item0']
 
-def test_assemble_tardis_model():
+
+@pytest.fixture
+def tardis_artis_test_fname(data_path):
+    return os.path.join(data_path, 'tardis_artis_fits.yml')
+
+def test_assemble_tardis_model(tardis_artis_test_fname, parameter_names):
+    mdl = assemble_tardis_model(tardis_artis_test_fname, parameter_names)
+
+def test_assemble_tardis_tinner_model():
     pass
