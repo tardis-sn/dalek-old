@@ -1,0 +1,1 @@
+from hdfstore import SafeHDFStore
