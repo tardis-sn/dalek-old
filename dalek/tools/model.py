@@ -21,6 +21,5 @@ class Tardis(Link):
                 config.set_config_item(k, v)
             return config
 
-        self._wrapper.set_logger(uuid)
-        mdl = self._wrapper(apply_config)
+        mdl = self._wrapper(apply_config, log_name=uuid)
         return mdl

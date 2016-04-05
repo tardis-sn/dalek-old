@@ -30,8 +30,8 @@ class TardisWrapper(object):
 
     def __call__(self, callback, log_name=None):
         if log_name is None:
-            self.uuid = uuid4()
-            self.set_logger(self.uuid)
+            log_name = uuid4()
+        self.set_logger(log_name)
         config = self._generate_config(callback)
         self.model = self.run_tardis(config)
         return self.model
