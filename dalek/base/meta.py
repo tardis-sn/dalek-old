@@ -92,11 +92,12 @@ class MetaInformation(object):
 
     @property
     def run_details(self):
-        res = {}
-        res['rank'] = self._rank
-        res['iteration'] = self._iteration
-        res['uuid'] = str(self._uuid)
-        res['fitness'] = 0
+        res = {
+                'rank': self._rank,
+                'iteration': self._iteration,
+                'uuid': str(self._uuid),
+                'fitness': self._fitness,
+                }
         try:
             for k,v in self._additional_data.items():
                 res[k] = v
