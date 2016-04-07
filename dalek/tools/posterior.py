@@ -7,8 +7,8 @@ class Posterior(Link):
 
     def calculate(self, prior, likelihood):
         try:
-            return prior + likelihood
-        except TypeError as e:
+            return prior + likelihood.value
+        except (TypeError, AttributeError) as e:
             if likelihood is None:
                 return prior
             else:

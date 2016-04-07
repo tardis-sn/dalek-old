@@ -3,7 +3,7 @@ import numpy as np
 from dalek.tools.base import Link, BreakChainException
 
 INVALID = -np.inf
-DEFAULT = 0
+DEFAULT = 0.0
 
 class Prior(Link):
     '''
