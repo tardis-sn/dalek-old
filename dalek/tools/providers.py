@@ -55,7 +55,6 @@ class Flux(Link):
         self._distance = distance.to('cm')
 
     def calculate(self, lum):
-        print(lum.unit)
         return lum / (4 * np.pi * self._distance**2)
 
 
