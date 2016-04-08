@@ -30,14 +30,15 @@ class MetaContainer(object):
         '''
         # TODO: proper dictionary to pd.Series parsing
         with self as store:
-            if 'summary' not in store.keys():
-                store.put('summary', pd.Series(data.values(), index=data.keys()))
+            if 'overview' not in store.keys():
+                store.put('overview', pd.Series(data.values(), index=data.keys()))
 
     def __enter__(self):
         '''
         Wrapper function to allow
-            with MetaContainer as store:
-                <code>
+
+        with MetaContainer as store:
+            <code>
         '''
         if not self.open:
             self.open = True
@@ -120,4 +121,4 @@ class MetaInformation(object):
     def save(self, container):
         with container as store:
             self._save_data(store)
-            store.append('summary', self.details)
+            store.append('run_table', self.details)

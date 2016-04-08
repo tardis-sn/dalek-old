@@ -82,11 +82,11 @@ class TestMetaInformation(object):
         message = MetaInformation.from_wrapper(wrapper, parameter_dict)
         message.save(self.container)
         with self.container as store:
-            diff = store['summary'].loc[1,0] == message.details.loc[1,0]
+            diff = store['run_table'].loc[1,0] == message.details.loc[1,0]
             assert diff.all()
             #print(store)
             #print(store.keys())
-            #print(store['summary'])
+            #print(store['run_table'])
 
 
     # @pytest.mark.skipif(True, reason='debug')
@@ -99,12 +99,12 @@ class TestMetaInformation(object):
         message2 = MetaInformation.from_wrapper(wrapper, parameter_dict)
         message2.save(self.container)
         with self.container as store:
-            diff = store['summary'].loc[1,0] == message.details.loc[1,0]
-            diff2 = store['summary'].loc[2,0] == message2.details.loc[2,0]
+            diff = store['run_table'].loc[1,0] == message.details.loc[1,0]
+            diff2 = store['run_table'].loc[2,0] == message2.details.loc[2,0]
             assert diff.all()
             assert diff2.all()
             #print(store.keys())
             #print(store)
             #print(store.keys())
-            #print(store['summary'])
+            #print(store['run_table'])
 
