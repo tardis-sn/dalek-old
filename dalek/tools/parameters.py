@@ -141,7 +141,12 @@ class ParameterContainer(object):
     def __getitem__(self, name):
         for p in self._parameters:
             if p.path == name:
-                return p
+                return p.value
 
     def items(self):
+        for p in self._parameters:
+            yield p.path, p.value
+
+    @property
+    def dict(self):
         return {p.path: p.value for p in self._parameters}

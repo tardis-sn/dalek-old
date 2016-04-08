@@ -65,3 +65,5 @@ def test_container():
             )
     cont.values = [0.5, 0.3]
     assert cont.values == [0.9, 0.1, 0.24]
+    with pytest.raises(AssertionError):
+        cont.values = [1]
