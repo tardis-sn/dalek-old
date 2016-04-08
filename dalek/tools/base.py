@@ -95,7 +95,6 @@ class Chain(Chainable):
         return input_dict
 
     def cleanup(self, input_dict):
-        return {
-                name: input_dict.get(name) for name in self.outputs
-                }
-
+        output_dict = dict.fromkeys(self.outputs)
+        output_dict.update(input_dict)
+        return output_dict
