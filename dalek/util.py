@@ -1,3 +1,4 @@
+import os
 import numpy as np
 from astropy import units as u, constants as const
 # Some helper functions
@@ -17,4 +18,16 @@ def bin_center_to_edge(bin_center):
 
 def bin_edge_to_center(bin_edge):
     return 0.5 * (bin_edge[:-1] + bin_edge[1:] )
+
+def set_engines_cpu_affinity():
+    import sys
+    if sys.platform.startswith('linux'):
+        try:
+            import psutil
+        except ImportError:
+            print 'psutil not available - can not set CPU affinity'
+        else:
+            from multiprocessing import cpu_count
+            p = psutil.Process(os.getpid())
+            p.cpu_affinity(range(cpu_count()))
 
