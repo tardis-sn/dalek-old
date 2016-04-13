@@ -13,6 +13,9 @@ class Prior(Link):
     outputs = ('logprior',)
 
     def calculate(self, parameters):
+        for p,v in parameters.items():
+            if np.isnan(v):
+                return INVALID
         try:
             o = parameters['model.abundances.o']
         except KeyError:

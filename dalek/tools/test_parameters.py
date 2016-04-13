@@ -1,5 +1,7 @@
 import sys
 import pytest
+import numpy as np
+
 from dalek.tools.parameters import (
         Parameter, ParameterContainer,
         DynamicParameter,
@@ -20,8 +22,8 @@ def test_dynamic_parameter(bounds):
     assert a.value == 1 + bounds[0]
     assert a.transform(0) == bounds[0]
     assert a.transform(1) == bounds[1]
-    with pytest.raises(ValueError):
-        a.value=1.1
+    a.value=1.1
+    assert np.isnan(a.value)
 
 def test_parameter_init():
     a = Parameter('c.b.a', default=0.5)
@@ -55,9 +57,11 @@ def test_container():
 
     cont.values = [0.5, 0.5, 0.3]
     assert cont.values == [0.2, 0.4, 0.24, 0.4]
+    cont.values = [0.5, 0.5, 0.3]
+    assert cont.values == [0.2, 0.4, 0.24, 0.4]
 
-    with pytest.raises(ValueError):
-        cont.values = [0.75, 1, 0.3]
+    cont.values = [0.75, 1, 0.3]
+    assert np.any(np.isnan(cont.values))
     cont = ParameterContainer(
             OverFlowParameter('a.b.overflow'),
             DynamicParameter('a.b.c', bounds=(0, 0.2)),

@@ -1,3 +1,6 @@
+import numpy as np
+
+
 class Parameter(object):
     """
     A static Parameter whose value can't be changed.
@@ -52,9 +55,10 @@ class DynamicParameter(Parameter):
 
     def transform(self, x):
         if x>1 or x<0:
-            raise ValueError(
-            'Parameter.transform: expected input is [0,1]. Received: {}'
-            .format(x))
+            return np.nan
+            #raise ValueError(
+            #'Parameter.transform: expected input is [0,1]. Received: {}'
+            #.format(x))
         else:
             return self._ftransform(x, self._bounds[0], self._bounds[1])
 
@@ -95,14 +99,15 @@ class OverFlowParameter(DependentParameter):
     def update(self, parameters):
         value = self._bounds[1]
         for p in parameters:
-            if p.base_path == self._match_string:
+            if p != self and p.base_path == self._match_string:
                 value -= p.value
         if value > self._bounds[0] and value < self._bounds[1]:
             return value
         else:
-            raise ValueError(
-                    'OverFlowParameter is out of bounds: {} is outside of {}'
-                    .format(value, self._bounds))
+            return np.nan
+            #raise ValueError(
+            #        'OverFlowParameter is out of bounds: {} is outside of {}'
+            #        .format(value, self._bounds))
 
 
 class ParameterContainer(object):
