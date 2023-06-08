@@ -131,9 +131,9 @@ def test_chain(apple, apple_t, banana, banana_t, cherry_a):
 def test_chain_init(apple, banana, cherry_a):
     chain = Chain(apple, banana, cherry_a)
     assert chain.inputs == set()
-    assert chain.outputs == set(['apple', 'banana', 'cherry'])
-    assert Chain(apple, cherry_a).inputs == set(['banana'])
-    assert Chain(apple, cherry_a).outputs  == set(['apple', 'banana', 'cherry'])
+    assert chain.outputs == {'apple', 'banana', 'cherry'}
+    assert Chain(apple, cherry_a).inputs == {'banana'}
+    assert Chain(apple, cherry_a).outputs == {'apple', 'banana', 'cherry'}
 
 def test_breakable_chain(apple, apple_t, banana, banana_t):
     cond = AppleBreak()

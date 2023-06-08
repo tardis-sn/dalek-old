@@ -91,11 +91,11 @@ for entry_point in entry_point_list:
 # directory name.
 c_files = []
 for root, dirs, files in os.walk(PACKAGENAME):
-    for filename in files:
-        if filename.endswith('.c'):
-            c_files.append(
-                os.path.join(
-                    os.path.relpath(root, PACKAGENAME), filename))
+    c_files.extend(
+        os.path.join(os.path.relpath(root, PACKAGENAME), filename)
+        for filename in files
+        if filename.endswith('.c')
+    )
 package_info['package_data'][PACKAGENAME].extend(c_files)
 
 # Note that requires and provides should not be included in the call to

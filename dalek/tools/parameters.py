@@ -101,10 +101,7 @@ class OverFlowParameter(DependentParameter):
         for p in parameters:
             if p != self and p.base_path == self._match_string:
                 value -= p.value
-        if value > self._bounds[0] and value < self._bounds[1]:
-            return value
-        else:
-            return np.nan
+        return value if value > self._bounds[0] and value < self._bounds[1] else np.nan
             #raise ValueError(
             #        'OverFlowParameter is out of bounds: {} is outside of {}'
             #        .format(value, self._bounds))

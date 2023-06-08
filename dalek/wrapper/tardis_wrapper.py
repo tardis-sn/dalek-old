@@ -44,7 +44,7 @@ class TardisWrapper(object):
                 atom_data=self.atom_data)
 
     def set_logger(self, name):
-        filename = os.path.join(self._log_dir, 'tardis_{}.log'.format(name))
+        filename = os.path.join(self._log_dir, f'tardis_{name}.log')
         self._set_logger(filename)
 
     def _set_logger(self, filename):

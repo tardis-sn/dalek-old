@@ -16,10 +16,9 @@ class Chainable(object):
         if self._isvalid(data):
             data = self._apply(copy(data))
         else:
-            raise ValueError("Inputs required are: {}\n Data provides only: {}".format(
-                str(self.inputs),
-                str(data)
-                ))
+            raise ValueError(
+                f"Inputs required are: {str(self.inputs)}\n Data provides only: {str(data)}"
+            )
         return data
 
     def _isvalid(self, data):
@@ -41,10 +40,7 @@ class Link(Chainable):
         return input_dict
 
     def _prepare_input(self, input_dict):
-        output = []
-        for i in self.inputs:
-            output.append(input_dict[i])
-        return output
+        return [input_dict[i] for i in self.inputs]
 
     def _prepare_output(self, output):
         '''
@@ -61,8 +57,8 @@ class Link(Chainable):
             return dict(zip(self.outputs, output))
         else:
             raise ValueError(
-                    "{} is expected to return {} but actual value was {}".format(
-                        self.__class__.__name__, (self.outputs), str(output)))
+                f"{self.__class__.__name__} is expected to return {self.outputs} but actual value was {str(output)}"
+            )
 
 
 class Chain(Chainable):
@@ -72,7 +68,7 @@ class Chain(Chainable):
             self.breakable = kwargs.pop('breakable')
         except KeyError:
             self.breakable = False
-        self._links = list()
+        self._links = []
         self.inputs = set()
         self.outputs = set()
         for arg in args:
@@ -87,11 +83,10 @@ class Chain(Chainable):
             try:
                 input_dict = link(input_dict)
             except BreakChainException as e:
-                if self.breakable:
-                    input_dict = self.cleanup(input_dict)
-                    break
-                else:
+                if not self.breakable:
                     raise e
+                input_dict = self.cleanup(input_dict)
+                break
         return input_dict
 
     def cleanup(self, input_dict):

@@ -15,9 +15,8 @@ class Tardis(Link):
     def __init__(self, wrapper):
         if not isinstance(wrapper, TardisWrapper):
             raise ValueError(
-                    "expected an instance of TardisWrapper, got: {}".format(
-                        str(type(wrapper)))
-                    )
+                f"expected an instance of TardisWrapper, got: {str(type(wrapper))}"
+            )
         self._wrapper = wrapper
 
     def calculate(self, parameters, uuid):
@@ -38,9 +37,8 @@ class DummyTardis(Link):
     def __init__(self, wrapper):
         if not isinstance(wrapper, TardisWrapper):
             raise ValueError(
-                    "expected an instance of TardisWrapper, got: {}".format(
-                        str(type(wrapper)))
-                    )
+                f"expected an instance of TardisWrapper, got: {str(type(wrapper))}"
+            )
         self._wrapper = wrapper
 
     def calculate(self, parameters, uuid):
@@ -52,7 +50,6 @@ class DummyTardis(Link):
             values['nu_min'] = config.spectrum[1].to(u.Hz, u.spectral()).value
             values['tos'] = config.supernova.time_explosion.cgs
             raise DummyException
-            return config
 
         try:
             mdl = self._wrapper(apply_config, log_name=uuid)

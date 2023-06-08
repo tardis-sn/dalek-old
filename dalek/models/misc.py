@@ -31,8 +31,7 @@ class SimpleTARDISUncertaintyModel(Model):
     def _generate_bins(observed_wavelength):
         hdiff = 0.5 * np.diff(observed_wavelength)
         hdiff = np.hstack((-hdiff[0], hdiff, hdiff[-1]))
-        bins = np.hstack((observed_wavelength[0], observed_wavelength)) + hdiff
-        return bins
+        return np.hstack((observed_wavelength[0], observed_wavelength)) + hdiff
 
     def evaluate(self, packet_nu, packet_energy, virtual_nu, virtual_energy,
                  param_names, param_values):
