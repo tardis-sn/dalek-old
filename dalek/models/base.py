@@ -118,18 +118,15 @@ def _generate_param_class_dict(fname, param_names):
     """
 
     config = ConfigurationNameSpace.from_yaml(fname)
-    class_dict = {}
     param_dict = {}
     short_param_name_dict = _convert_param_names(param_names)
 
-    class_dict['convert_param_dict'] = short_param_name_dict
+    class_dict = {'convert_param_dict': short_param_name_dict}
     for key in short_param_name_dict:
         try:
             value = config.get_config_item(short_param_name_dict[key])
         except KeyError:
             raise ValueError('{0} is not a valid parameter'.format(key))
-        else:
-            pass
         class_dict[key] = Parameter()
         param_dict[key] = getattr(value, 'value', value)
 

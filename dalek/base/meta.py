@@ -64,7 +64,7 @@ class MetaInformation(object):
         self._iteration = iteration
         self._fitness = fitness
         self._additional_data = additional_data
-        self._data = list()
+        self._data = []
 
     @classmethod
     def from_wrapper(cls, wrapper, parameter_dict):
@@ -88,7 +88,7 @@ class MetaInformation(object):
         setattr(self, '_' + name, data)
 
     def data_path(self, name=''):
-        return 'data/{}/{}'.format(self._uuid, name)
+        return f'data/{self._uuid}/{name}'
 
 
     @property

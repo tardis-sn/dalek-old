@@ -45,7 +45,6 @@ class CheckPrior(Link):
 
     def calculate(self, prior):
         if prior == INVALID:
-            raise BreakChainException(
-                    'Prior is INVALID: {}'.format(prior))
+            raise BreakChainException(f'Prior is INVALID: {prior}')
 
 

@@ -54,9 +54,9 @@ class TestMetaInformation(object):
 
     @classmethod
     @pytest.fixture(scope='function', autouse=True)
-    def setup(self, request):
-        self._file = tempfile.NamedTemporaryFile()
-        self.container = MetaContainer(self._file.name)
+    def setup(cls, request):
+        cls._file = tempfile.NamedTemporaryFile()
+        cls.container = MetaContainer(cls._file.name)
 
     @pytest.fixture(scope='class')
     def parameter_dict(self):
